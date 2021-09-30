@@ -1,8 +1,8 @@
 import { hash } from 'bcryptjs';
-import IUserRepository from '@repositories/Users/IUserRepository';
-import UserRepository from '@repositories/Users/UserRepository';
-import User from '../models/User';
-import AppError from '../errors/AppError';
+import UserRepository from '../../repositories/Users/UserRepository';
+import User from '../../models/User';
+import AppError from '../../errors/AppError';
+import { inject, injectable } from 'tsyringe';
 
 interface Request {
   name: string;
@@ -11,12 +11,12 @@ interface Request {
   password: string;
 }
 
+@injectable()
 class CreateUserService {
-  private userRepository: IUserRepository;
-
-  constructor(userRepository: UserRepository) {
-    this.userRepository = userRepository;
-  }
+  constructor(
+    @inject('UserRepository')
+    private userRepository: UserRepository,
+  ) {}
 
   public async execute({
     name,

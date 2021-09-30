@@ -9,6 +9,7 @@ import routes from './routes';
 import errorHandling from './middleware/errorHandling';
 
 import './database';
+import './container';
 
 const port = process.env.PORT || 3333;
 
