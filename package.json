@@ -3,6 +3,17 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "test": "jest",
+    "coverage": "jest --coverage",
+    "lint": "eslint \"{src,test}/**/*.{js,ts}\"",
+    "lint-fix": "npm run lint -- --fix",
+    "migrations:gen": "ts-node-dev ./node_modules/.bin/typeorm migration:generate",
+    "migrations:run": "ts-node-dev ./node_modules/.bin/typeorm migration:run",
+    "start": "ts-node src/index.ts",
+    "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts",
+    "build": "tsc"
+  },
   "dependencies": {
     "express": "^4.17.1",
     "reflect-metadata": "^0.1.13",

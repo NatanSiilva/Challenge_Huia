@@ -5,8 +5,10 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import { pagination } from 'typeorm-pagination';
-import errorHandling from '@middleware/errorHandling';
-import routes from '@routes/index';
+import routes from './routes';
+import errorHandling from './middleware/errorHandling';
+
+import './database';
 
 const port = process.env.PORT || 3333;
 
