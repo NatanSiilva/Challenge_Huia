@@ -11,9 +11,17 @@
     "strictPropertyInitialization": false,
     "baseUrl": "./",
     "paths": {
+      "@repositories/*": ["src/repositories/*"],
+      "@controllers/*": ["src/controllers/*"],
+      "@middleware/*": ["src/middleware/*"],
+      "@interfaces/*": ["src/interfaces/*"],
+      "@database/*": ["src/database/*"],
+      "@services/*": ["src/services/*"],
+      "@models/*": ["src/models/*"],
       "@config/*": ["src/config/*"],
-      "@modules/*": ["src/modules/*"],
-      "@shared/*": ["src/shared/*"]
+      "@routes/*": ["src/routes/*"],
+      "@errors/*": ["src/errors/*"],
+      "@dtos/*": ["src/dtos/*"]
     },
     "typeRoots": ["@types", "./node_modules/@types"],
     "esModuleInterop": true,
