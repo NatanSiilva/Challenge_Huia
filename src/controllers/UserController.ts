@@ -18,7 +18,7 @@ class UserController {
   }
 
   public async create(req: Request, res: Response): Promise<Response> {
-    const { name, email, password, role } = req.body;
+    const { name, email, password, role, birth_date, cpf } = req.body;
 
     const userRespository = new UserRepository();
     const createUser = new CreateUserService(userRespository);
@@ -28,6 +28,8 @@ class UserController {
       email,
       password,
       role,
+      birth_date,
+      cpf,
     });
 
     return res.json(classToClass({ data: user }));

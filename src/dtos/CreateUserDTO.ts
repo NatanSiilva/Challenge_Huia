@@ -3,4 +3,6 @@ export default interface CreateUserDTO {
   email: string;
   password: string;
   role: string;
+  birth_date: string;
+  cpf: string;
 }

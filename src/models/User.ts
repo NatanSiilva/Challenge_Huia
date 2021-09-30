@@ -24,6 +24,12 @@ class User {
   password: string;
 
   @Column()
+  cpf: string;
+
+  @Column()
+  birth_date: string;
+
+  @Column()
   role: string;
 
   @CreateDateColumn()

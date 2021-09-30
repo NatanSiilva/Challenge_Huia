@@ -1,14 +1,9 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export default class CreationOfEntities1632974234197
-  implements MigrationInterface
-{
-  name = 'CreationOfEntities1632974234197';
+export default class CreateEntities1632978568730 implements MigrationInterface {
+  name = 'CreateEntities1632978568730';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(
-      `CREATE TABLE "customer" ("id" varchar PRIMARY KEY NOT NULL, "name" varchar NOT NULL, "cpf" varchar NOT NULL, "birth_date" varchar NOT NULL, "created_at" datetime NOT NULL DEFAULT (datetime('now')), "updated_at" datetime NOT NULL DEFAULT (datetime('now')))`,
-    );
     await queryRunner.query(
       `CREATE TABLE "products" ("id" varchar PRIMARY KEY NOT NULL, "code" varchar NOT NULL, "manufacturing_date" varchar NOT NULL, "product_quantity" varchar NOT NULL, "created_at" datetime NOT NULL DEFAULT (datetime('now')), "updated_at" datetime NOT NULL DEFAULT (datetime('now')))`,
     );
@@ -16,7 +11,7 @@ export default class CreationOfEntities1632974234197
       `CREATE TABLE "orders_products" ("id" varchar PRIMARY KEY NOT NULL, "order_id" varchar NOT NULL, "product_id" varchar NOT NULL, "amount" decimal NOT NULL, "quantity" integer NOT NULL, "created_at" datetime NOT NULL DEFAULT (datetime('now')), "updated_at" datetime NOT NULL DEFAULT (datetime('now')))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "users" ("id" varchar PRIMARY KEY NOT NULL, "name" varchar NOT NULL, "email" varchar NOT NULL, "password" varchar NOT NULL, "role" varchar NOT NULL, "created_at" datetime NOT NULL DEFAULT (datetime('now')), "updated_at" datetime NOT NULL DEFAULT (datetime('now')))`,
+      `CREATE TABLE "users" ("id" varchar PRIMARY KEY NOT NULL, "name" varchar NOT NULL, "email" varchar NOT NULL, "password" varchar NOT NULL, "cpf" varchar NOT NULL, "birth_date" varchar NOT NULL, "role" varchar NOT NULL, "created_at" datetime NOT NULL DEFAULT (datetime('now')), "updated_at" datetime NOT NULL DEFAULT (datetime('now')))`,
     );
     await queryRunner.query(
       `CREATE TABLE "orders" ("id" varchar PRIMARY KEY NOT NULL, "code" varchar NOT NULL, "customer_id" varchar NOT NULL, "user_id" varchar NOT NULL, "created_at" datetime NOT NULL DEFAULT (datetime('now')), "updated_at" datetime NOT NULL DEFAULT (datetime('now')))`,
@@ -72,7 +67,7 @@ export default class CreationOfEntities1632974234197
       `ALTER TABLE "temporary_orders_products" RENAME TO "orders_products"`,
     );
     await queryRunner.query(
-      `CREATE TABLE "temporary_orders" ("id" varchar PRIMARY KEY NOT NULL, "code" varchar NOT NULL, "customer_id" varchar NOT NULL, "user_id" varchar NOT NULL, "created_at" datetime NOT NULL DEFAULT (datetime('now')), "updated_at" datetime NOT NULL DEFAULT (datetime('now')), CONSTRAINT "FK_772d0ce0473ac2ccfa26060dbe9" FOREIGN KEY ("customer_id") REFERENCES "customer" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION, CONSTRAINT "FK_a922b820eeef29ac1c6800e826a" FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION)`,
+      `CREATE TABLE "temporary_orders" ("id" varchar PRIMARY KEY NOT NULL, "code" varchar NOT NULL, "customer_id" varchar NOT NULL, "user_id" varchar NOT NULL, "created_at" datetime NOT NULL DEFAULT (datetime('now')), "updated_at" datetime NOT NULL DEFAULT (datetime('now')), CONSTRAINT "FK_772d0ce0473ac2ccfa26060dbe9" FOREIGN KEY ("customer_id") REFERENCES "users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION, CONSTRAINT "FK_a922b820eeef29ac1c6800e826a" FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION)`,
     );
     await queryRunner.query(
       `INSERT INTO "temporary_orders"("id", "code", "customer_id", "user_id", "created_at", "updated_at") SELECT "id", "code", "customer_id", "user_id", "created_at", "updated_at" FROM "orders"`,
@@ -148,6 +143,5 @@ export default class CreationOfEntities1632974234197
     await queryRunner.query(`DROP TABLE "users"`);
     await queryRunner.query(`DROP TABLE "orders_products"`);
     await queryRunner.query(`DROP TABLE "products"`);
-    await queryRunner.query(`DROP TABLE "customer"`);
   }
 }

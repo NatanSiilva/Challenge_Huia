@@ -9,6 +9,8 @@ interface Request {
   role: string;
   email: string;
   password: string;
+  birth_date: string;
+  cpf: string;
 }
 
 @injectable()
@@ -23,6 +25,8 @@ class CreateUserService {
     role,
     password,
     email,
+    birth_date,
+    cpf,
   }: Request): Promise<User> {
     const passwordHash = await hash(password, 8);
 
@@ -37,6 +41,8 @@ class CreateUserService {
       email,
       role,
       password: passwordHash,
+      birth_date,
+      cpf,
     });
 
     return user;

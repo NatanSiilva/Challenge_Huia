@@ -1,0 +1,83 @@
+import { Repository, getRepository } from 'typeorm';
+import IPaginate from '../../interfaces/IPaginate';
+import Product from '../../models/Products';
+import IProductRepository from './IProductRepository';
+import CreateProductDTO from '../../dtos/CreateProductDTO';
+
+class ProductRepository implements IProductRepository {
+  private ormRepository: Repository<Product>;
+
+  constructor() {
+    this.ormRepository = getRepository(Product);
+  }
+
+  public async findAll(): Promise<Product[]> {
+    return this.ormRepository.find({ relations: ['lots'] });
+  }
+
+  public async findAllPaginate(): Promise<IPaginate<Product>> {
+    const product = await this.ormRepository
+      .createQueryBuilder()
+      .where([{ relations: ['lots'] }])
+      .paginate();
+
+    return product as IPaginate<Product>;
+  }
+
+  public async findById(id: string): Promise<Product | undefined> {
+    const product = await this.ormRepository.findOne({
+      where: { id },
+      relations: ['lots'],
+    });
+
+    return product;
+  }
+
+  public async findByName(name: string): Promise<Product | undefined> {
+    const product = await this.ormRepository.findOne({
+      where: { name },
+      relations: ['lots'],
+    });
+
+    return product;
+  }
+
+  public async findByEmail(email: string): Promise<Product | undefined> {
+    const product = await this.ormRepository.findOne({
+      where: { email },
+      relations: ['lots'],
+    });
+
+    return product;
+  }
+
+  public async create({
+    amount,
+    color,
+    description,
+    lot_number,
+    name,
+  }: CreateProductDTO): Promise<Product> {
+    const product = this.ormRepository.create({
+      amount,
+      color,
+      description,
+      lot_number,
+      name,
+    });
+
+    await this.ormRepository.save(product);
+
+    return product;
+  }
+
+  public async save(product: Product): Promise<Product> {
+    return this.ormRepository.save(product);
+  }
+
+  public async delete(product: Product): Promise<void> {
+    await this.ormRepository.remove(product);
+  }
+}
+
+export default ProductRepository;

@@ -9,7 +9,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import Customer from './Customer';
+
 import OrdersProducts from './OrdersProducts';
 import User from './User';
 
@@ -25,9 +25,9 @@ class Order {
   @Column()
   customer_id: string;
 
-  @ManyToOne(() => Customer)
+  @ManyToOne(() => User)
   @JoinColumn({ name: 'customer_id' })
-  customer: Customer;
+  customer: User;
 
   @Column()
   user_id: string;
