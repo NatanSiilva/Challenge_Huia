@@ -7,28 +7,20 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('clients')
-class Client {
+@Entity('products')
+class Lot {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  name: string;
-
-  @Column({
-    unique: true,
-  })
-  email: string;
-
-  @Column()
-  phone: string;
-
-  @Column()
-  cpf: string;
-
-  @Column()
   @Generated('uuid')
   code: string;
+
+  @Column()
+  manufacturing_date: string;
+
+  @Column()
+  product_quantity: string;
 
   @CreateDateColumn()
   created_at: Date;
@@ -37,4 +29,4 @@ class Client {
   updated_at: Date;
 }
 
-export default Client;
+export default Lot;
