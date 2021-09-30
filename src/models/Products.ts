@@ -18,7 +18,6 @@ class Product {
   id: string;
 
   @Column()
-  @Generated('uuid')
   code: string;
 
   @Column()

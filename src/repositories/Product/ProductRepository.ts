@@ -33,6 +33,15 @@ class ProductRepository implements IProductRepository {
     return product;
   }
 
+  public async findByCode(code: string): Promise<Product | undefined> {
+    const product = await this.ormRepository.findOne({
+      where: { code },
+      relations: ['lots'],
+    });
+
+    return product;
+  }
+
   public async findByName(name: string): Promise<Product | undefined> {
     const product = await this.ormRepository.findOne({
       where: { name },
@@ -57,6 +66,7 @@ class ProductRepository implements IProductRepository {
     description,
     lot_number,
     name,
+    code,
   }: CreateProductDTO): Promise<Product> {
     const product = this.ormRepository.create({
       amount,
@@ -64,6 +74,7 @@ class ProductRepository implements IProductRepository {
       description,
       lot_number,
       name,
+      code,
     });
 
     await this.ormRepository.save(product);

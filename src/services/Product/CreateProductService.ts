@@ -12,6 +12,7 @@ interface Request {
   color: string;
   description: string;
   amount: string;
+  code: string;
 }
 
 @injectable()
@@ -27,7 +28,14 @@ class CreateProductService {
     description,
     lot_number,
     name,
+    code,
   }: Request): Promise<Product> {
+    const codeExists = await this.productRepository.findByCode(code);
+
+    if (productExists) {
+      throw new AppError('product already exists with that name', 400);
+    }
+
     const productExists = await this.productRepository.findByName(name);
 
     if (productExists) {
@@ -40,6 +48,7 @@ class CreateProductService {
       description,
       lot_number,
       name,
+      code,
     });
 
     return product;

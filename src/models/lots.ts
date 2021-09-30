@@ -2,7 +2,6 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  Generated,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -13,10 +12,9 @@ class Lot {
   id: string;
 
   @Column()
-  @Generated('uuid')
   code: string;
 
-  @Column()
+  @CreateDateColumn()
   manufacturing_date: string;
 
   @Column()
