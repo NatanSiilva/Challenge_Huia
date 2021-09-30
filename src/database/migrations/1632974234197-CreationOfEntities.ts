@@ -1,9 +1,9 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export default class CreationOfEntities1632973167469
+export default class CreationOfEntities1632974234197
   implements MigrationInterface
 {
-  name = 'CreationOfEntities1632973167469';
+  name = 'CreationOfEntities1632974234197';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
@@ -16,7 +16,7 @@ export default class CreationOfEntities1632973167469
       `CREATE TABLE "orders_products" ("id" varchar PRIMARY KEY NOT NULL, "order_id" varchar NOT NULL, "product_id" varchar NOT NULL, "amount" decimal NOT NULL, "quantity" integer NOT NULL, "created_at" datetime NOT NULL DEFAULT (datetime('now')), "updated_at" datetime NOT NULL DEFAULT (datetime('now')))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "users" ("id" varchar PRIMARY KEY NOT NULL, "name" varchar NOT NULL, "password" varchar NOT NULL, "role" varchar NOT NULL, "created_at" datetime NOT NULL DEFAULT (datetime('now')), "updated_at" datetime NOT NULL DEFAULT (datetime('now')))`,
+      `CREATE TABLE "users" ("id" varchar PRIMARY KEY NOT NULL, "name" varchar NOT NULL, "email" varchar NOT NULL, "password" varchar NOT NULL, "role" varchar NOT NULL, "created_at" datetime NOT NULL DEFAULT (datetime('now')), "updated_at" datetime NOT NULL DEFAULT (datetime('now')))`,
     );
     await queryRunner.query(
       `CREATE TABLE "orders" ("id" varchar PRIMARY KEY NOT NULL, "code" varchar NOT NULL, "customer_id" varchar NOT NULL, "user_id" varchar NOT NULL, "created_at" datetime NOT NULL DEFAULT (datetime('now')), "updated_at" datetime NOT NULL DEFAULT (datetime('now')))`,
