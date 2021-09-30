@@ -18,13 +18,13 @@ class Product {
   id: string;
 
   @Column()
-  code: string;
+  code: number;
 
   @Column()
   name: string;
 
   @Column()
-  lot_number: string;
+  lot_number: number;
 
   @ManyToOne(() => Lot)
   @JoinColumn({ name: 'lot_number' })

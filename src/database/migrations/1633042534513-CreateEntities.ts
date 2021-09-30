@@ -1,14 +1,14 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export default class CreateEntities1632978568730 implements MigrationInterface {
-  name = 'CreateEntities1632978568730';
+export default class CreateEntities1633042534513 implements MigrationInterface {
+  name = 'CreateEntities1633042534513';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
       `CREATE TABLE "products" ("id" varchar PRIMARY KEY NOT NULL, "code" varchar NOT NULL, "manufacturing_date" varchar NOT NULL, "product_quantity" varchar NOT NULL, "created_at" datetime NOT NULL DEFAULT (datetime('now')), "updated_at" datetime NOT NULL DEFAULT (datetime('now')))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "orders_products" ("id" varchar PRIMARY KEY NOT NULL, "order_id" varchar NOT NULL, "product_id" varchar NOT NULL, "amount" decimal NOT NULL, "quantity" integer NOT NULL, "created_at" datetime NOT NULL DEFAULT (datetime('now')), "updated_at" datetime NOT NULL DEFAULT (datetime('now')))`,
+      `CREATE TABLE "orders_products" ("id" varchar PRIMARY KEY NOT NULL, "order_id" varchar NOT NULL, "product_id" varchar NOT NULL, "total_price" decimal NOT NULL, "quantity" integer NOT NULL, "created_at" datetime NOT NULL DEFAULT (datetime('now')), "updated_at" datetime NOT NULL DEFAULT (datetime('now')))`,
     );
     await queryRunner.query(
       `CREATE TABLE "users" ("id" varchar PRIMARY KEY NOT NULL, "name" varchar NOT NULL, "email" varchar NOT NULL, "password" varchar NOT NULL, "cpf" varchar NOT NULL, "birth_date" varchar NOT NULL, "role" varchar NOT NULL, "created_at" datetime NOT NULL DEFAULT (datetime('now')), "updated_at" datetime NOT NULL DEFAULT (datetime('now')))`,
@@ -57,10 +57,10 @@ export default class CreateEntities1632978568730 implements MigrationInterface {
       `ALTER TABLE "temporary_products" RENAME TO "products"`,
     );
     await queryRunner.query(
-      `CREATE TABLE "temporary_orders_products" ("id" varchar PRIMARY KEY NOT NULL, "order_id" varchar NOT NULL, "product_id" varchar NOT NULL, "amount" decimal NOT NULL, "quantity" integer NOT NULL, "created_at" datetime NOT NULL DEFAULT (datetime('now')), "updated_at" datetime NOT NULL DEFAULT (datetime('now')), CONSTRAINT "FK_266b0df20b9e4423bc9da1bbdc1" FOREIGN KEY ("order_id") REFERENCES "orders" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION, CONSTRAINT "FK_beb618ce6dae64b9d817394ebdb" FOREIGN KEY ("product_id") REFERENCES "products" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION)`,
+      `CREATE TABLE "temporary_orders_products" ("id" varchar PRIMARY KEY NOT NULL, "order_id" varchar NOT NULL, "product_id" varchar NOT NULL, "total_price" decimal NOT NULL, "quantity" integer NOT NULL, "created_at" datetime NOT NULL DEFAULT (datetime('now')), "updated_at" datetime NOT NULL DEFAULT (datetime('now')), CONSTRAINT "FK_266b0df20b9e4423bc9da1bbdc1" FOREIGN KEY ("order_id") REFERENCES "orders" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION, CONSTRAINT "FK_beb618ce6dae64b9d817394ebdb" FOREIGN KEY ("product_id") REFERENCES "products" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION)`,
     );
     await queryRunner.query(
-      `INSERT INTO "temporary_orders_products"("id", "order_id", "product_id", "amount", "quantity", "created_at", "updated_at") SELECT "id", "order_id", "product_id", "amount", "quantity", "created_at", "updated_at" FROM "orders_products"`,
+      `INSERT INTO "temporary_orders_products"("id", "order_id", "product_id", "total_price", "quantity", "created_at", "updated_at") SELECT "id", "order_id", "product_id", "total_price", "quantity", "created_at", "updated_at" FROM "orders_products"`,
     );
     await queryRunner.query(`DROP TABLE "orders_products"`);
     await queryRunner.query(
@@ -93,10 +93,10 @@ export default class CreateEntities1632978568730 implements MigrationInterface {
       `ALTER TABLE "orders_products" RENAME TO "temporary_orders_products"`,
     );
     await queryRunner.query(
-      `CREATE TABLE "orders_products" ("id" varchar PRIMARY KEY NOT NULL, "order_id" varchar NOT NULL, "product_id" varchar NOT NULL, "amount" decimal NOT NULL, "quantity" integer NOT NULL, "created_at" datetime NOT NULL DEFAULT (datetime('now')), "updated_at" datetime NOT NULL DEFAULT (datetime('now')))`,
+      `CREATE TABLE "orders_products" ("id" varchar PRIMARY KEY NOT NULL, "order_id" varchar NOT NULL, "product_id" varchar NOT NULL, "total_price" decimal NOT NULL, "quantity" integer NOT NULL, "created_at" datetime NOT NULL DEFAULT (datetime('now')), "updated_at" datetime NOT NULL DEFAULT (datetime('now')))`,
     );
     await queryRunner.query(
-      `INSERT INTO "orders_products"("id", "order_id", "product_id", "amount", "quantity", "created_at", "updated_at") SELECT "id", "order_id", "product_id", "amount", "quantity", "created_at", "updated_at" FROM "temporary_orders_products"`,
+      `INSERT INTO "orders_products"("id", "order_id", "product_id", "total_price", "quantity", "created_at", "updated_at") SELECT "id", "order_id", "product_id", "total_price", "quantity", "created_at", "updated_at" FROM "temporary_orders_products"`,
     );
     await queryRunner.query(`DROP TABLE "temporary_orders_products"`);
     await queryRunner.query(

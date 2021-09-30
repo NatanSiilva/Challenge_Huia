@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import lotRoutes from './lot';
 import userRoutes from './user';
 
 const routes = Router();
@@ -9,5 +10,6 @@ routes.get('/', (request, response) =>
 );
 
 routes.use(`${prefixRoutes}/users`, userRoutes);
+routes.use(`${prefixRoutes}/lot`, lotRoutes);
 
 export default routes;

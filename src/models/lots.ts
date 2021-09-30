@@ -6,19 +6,19 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('products')
+@Entity('lots')
 class Lot {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  code: string;
+  code: number;
 
-  @CreateDateColumn()
+  @Column()
   manufacturing_date: string;
 
   @Column()
-  product_quantity: string;
+  product_quantity: number;
 
   @CreateDateColumn()
   created_at: Date;

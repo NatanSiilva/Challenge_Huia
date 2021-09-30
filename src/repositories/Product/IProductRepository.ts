@@ -6,7 +6,7 @@ export default interface IProductRepository {
   findAll(): Promise<Product[]>;
   findAllPaginate(): Promise<IPaginate<Product>>;
   findByEmail(email: string): Promise<Product | undefined>;
-  findByCode(code: string): Promise<Product | undefined>;
+  findByCode(code: number): Promise<Product | undefined>;
   findByName(name: string): Promise<Product | undefined>;
   findById(id: string): Promise<Product | undefined>;
   create(createProductDTO: CreateProductDTO): Promise<Product>;

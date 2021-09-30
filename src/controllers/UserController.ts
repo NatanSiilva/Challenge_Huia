@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { classToClass } from 'class-transformer';
-import UserRepository from '../repositories/Users/UserRepository';
 import CreateUserService from '../services/User/CreateUserService';
 import { container } from 'tsyringe';
 import ListUserService from '../services/User/ListUserService';
@@ -18,10 +17,9 @@ class UserController {
   }
 
   public async create(req: Request, res: Response): Promise<Response> {
-    const { name, email, password, role, birth_date, cpf, code } = req.body;
+    const { name, email, password, role, birth_date, cpf } = req.body;
 
-    const userRespository = new UserRepository();
-    const createUser = new CreateUserService(userRespository);
+    const createUser = container.resolve(CreateUserService);
 
     const user = await createUser.execute({
       name,
@@ -30,10 +28,9 @@ class UserController {
       role,
       birth_date,
       cpf,
-      code,
     });
 
-    return res.json(classToClass({ data: user }));
+    return res.json(classToClass({ success: true, data: user }));
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {

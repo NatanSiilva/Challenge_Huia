@@ -5,8 +5,8 @@ import Lot from '../../models/lots';
 
 interface Request {
   manufacturing_date: string;
-  product_quantity: string;
-  code: string;
+  product_quantity: number;
+  code: number;
 }
 
 @injectable()

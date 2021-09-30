@@ -1,18 +1,15 @@
-import { hash } from 'bcryptjs';
-
-import User from '../../models/User';
 import AppError from '../../errors/AppError';
 import { inject, injectable } from 'tsyringe';
-import ProductRepository from '@repositories/Product/ProductRepository';
-import Product from '@models/Products';
+import ProductRepository from '../../repositories/Product/ProductRepository';
+import Product from '../../models/Products';
 
 interface Request {
   name: string;
-  lot_number: string;
+  lot_number: number;
   color: string;
   description: string;
+  code: number;
   amount: string;
-  code: string;
 }
 
 @injectable()
@@ -23,17 +20,17 @@ class CreateProductService {
   ) {}
 
   public async execute({
-    amount,
     color,
     description,
     lot_number,
     name,
     code,
+    amount,
   }: Request): Promise<Product> {
     const codeExists = await this.productRepository.findByCode(code);
 
-    if (productExists) {
-      throw new AppError('product already exists with that name', 400);
+    if (codeExists) {
+      throw new AppError('Code already exists', 400);
     }
 
     const productExists = await this.productRepository.findByName(name);

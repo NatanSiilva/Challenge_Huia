@@ -1,5 +1,5 @@
 export default interface createLotDTO {
-  code: string;
+  code: number;
   manufacturing_date: string;
-  product_quantity: string;
+  product_quantity: number;
 }

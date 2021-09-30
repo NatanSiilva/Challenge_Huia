@@ -30,7 +30,7 @@ class OrdersProducts {
   product_id: string;
 
   @Column('decimal')
-  amount: number;
+  total_price: number;
 
   @Column('int')
   quantity: number;

@@ -30,7 +30,7 @@ class LotRepository implements ILotRepository {
     return lot;
   }
 
-  public async findByCode(code: string): Promise<Lot | undefined> {
+  public async findByCode(code: number): Promise<Lot | undefined> {
     const lot = await this.ormRepository.findOne({
       where: { code },
     });
