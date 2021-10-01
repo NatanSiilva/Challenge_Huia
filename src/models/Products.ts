@@ -26,7 +26,7 @@ class Product {
   @Column()
   lot_number: number;
 
-  @ManyToOne(() => Lot)
+  @ManyToOne(() => Lot, lot => lot.product)
   @JoinColumn({ name: 'lot_number' })
   lot: Lot;
 

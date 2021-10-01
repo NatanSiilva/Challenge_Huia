@@ -11,6 +11,7 @@
     "migrations:gen": "ts-node-dev ./node_modules/.bin/typeorm migration:generate",
     "migrations:run": "ts-node-dev ./node_modules/.bin/typeorm migration:run",
     "migrations:rev": "ts-node-dev ./node_modules/.bin/typeorm migration:revert",
+    "migrations:cre": "ts-node-dev ./node_modules/.bin/typeorm migration:create",
     "start": "ts-node src/index.ts",
     "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts",
     "build": "tsc"

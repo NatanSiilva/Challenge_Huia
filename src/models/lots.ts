@@ -2,9 +2,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import Product from './Products';
 
 @Entity('lots')
 class Lot {
@@ -13,6 +15,12 @@ class Lot {
 
   @Column()
   code: number;
+
+  @OneToMany(() => Product, product => product.lot, {
+    cascade: true,
+    // eager: true,
+  })
+  product: Product;
 
   @Column()
   manufacturing_date: string;

@@ -27,7 +27,6 @@ class ProductRepository implements IProductRepository {
   public async findById(id: string): Promise<Product | undefined> {
     const product = await this.ormRepository.findOne({
       where: { id },
-      relations: ['lots'],
     });
 
     return product;
@@ -36,7 +35,6 @@ class ProductRepository implements IProductRepository {
   public async findByCode(code: number): Promise<Product | undefined> {
     const product = await this.ormRepository.findOne({
       where: { code },
-      relations: ['lots'],
     });
 
     return product;
@@ -45,7 +43,6 @@ class ProductRepository implements IProductRepository {
   public async findByName(name: string): Promise<Product | undefined> {
     const product = await this.ormRepository.findOne({
       where: { name },
-      relations: ['lots'],
     });
 
     return product;
@@ -54,7 +51,6 @@ class ProductRepository implements IProductRepository {
   public async findByEmail(email: string): Promise<Product | undefined> {
     const product = await this.ormRepository.findOne({
       where: { email },
-      relations: ['lots'],
     });
 
     return product;

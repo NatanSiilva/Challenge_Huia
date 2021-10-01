@@ -2,6 +2,7 @@ import AppError from '../../errors/AppError';
 import { inject, injectable } from 'tsyringe';
 import ProductRepository from '../../repositories/Product/ProductRepository';
 import Product from '../../models/Products';
+import LotRepository from '../../repositories/Lot/LotRepository';
 
 interface Request {
   name: string;
@@ -17,6 +18,9 @@ class CreateProductService {
   constructor(
     @inject('ProductRepository')
     private productRepository: ProductRepository,
+
+    @inject('LotRepository')
+    private lotRepository: LotRepository,
   ) {}
 
   public async execute({
@@ -27,6 +31,12 @@ class CreateProductService {
     code,
     amount,
   }: Request): Promise<Product> {
+    const lotExists = await this.lotRepository.findByCode(lot_number);
+
+    if (!lotExists) {
+      throw new AppError('Batch does not exist', 400);
+    }
+
     const codeExists = await this.productRepository.findByCode(code);
 
     if (codeExists) {
