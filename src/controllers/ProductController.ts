@@ -3,6 +3,8 @@ import { container } from 'tsyringe';
 import ListProductService from '../services/Product/ListProductService';
 import CreateProductService from '../services/Product/CreateProductService';
 import ListProductLotService from '../services/Product/ListProductLotService';
+import DeleteProductService from '../services/Product/DeleteProductService';
+import UpdateProductService from '../services/Product/UpdateProductService';
 
 class ProductController {
   public async index(req: Request, res: Response): Promise<Response> {
@@ -37,6 +39,33 @@ class ProductController {
     });
 
     return res.json({ success: true, data: product });
+  }
+
+  public async update(request: Request, response: Response): Promise<Response> {
+    const { name, color, description, amount } = request.body;
+    const { id } = request.params;
+
+    const updateProduct = container.resolve(UpdateProductService);
+
+    const product = await updateProduct.execute({
+      id,
+      name,
+      color,
+      description,
+      amount,
+    });
+
+    return response.json({ success: true, data: product });
+  }
+
+  public async delete(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+
+    const deleteProduct = container.resolve(DeleteProductService);
+
+    await deleteProduct.execute(id);
+
+    return res.json({ message: 'Product deleted success' });
   }
 }
 

@@ -52,6 +52,7 @@ export default class CreateProduct1633047616624 implements MigrationInterface {
             columnNames: ['lot_id'],
             referencedTableName: 'lots',
             referencedColumnNames: ['id'],
+            onDelete: 'SET NULL',
           },
         ],
       }),
