@@ -2,7 +2,6 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  Generated,
   JoinColumn,
   ManyToOne,
   OneToMany,
@@ -21,15 +20,9 @@ class Order {
   @Column()
   code: string;
 
-  @Column()
-  customer_id: string;
-
   @ManyToOne(() => User)
   @JoinColumn({ name: 'customer_id' })
   customer: User;
-
-  @Column()
-  user_id: string;
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'user_id' })

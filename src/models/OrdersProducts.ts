@@ -29,10 +29,10 @@ class OrdersProducts {
   @Column()
   product_id: string;
 
-  @Column('decimal')
+  @Column()
   total_price: number;
 
-  @Column('int')
+  @Column()
   quantity: number;
 
   @CreateDateColumn()
