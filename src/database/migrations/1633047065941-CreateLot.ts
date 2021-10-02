@@ -10,12 +10,10 @@ export default class CreateLot1633047065941 implements MigrationInterface {
             name: 'id',
             type: 'uuid',
             isPrimary: true,
-            generationStrategy: 'uuid',
-            default: 'uuid_generate_v4()',
           },
           {
             name: 'code',
-            type: 'int',
+            type: 'string',
           },
           {
             name: 'manufacturing_date',

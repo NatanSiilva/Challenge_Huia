@@ -14,12 +14,11 @@ class LotController {
   }
 
   public async create(req: Request, res: Response): Promise<Response> {
-    const { code, manufacturing_date, product_quantity } = req.body;
+    const { manufacturing_date, product_quantity } = req.body;
 
     const createLot = container.resolve(CreateLotService);
 
     const lot = await createLot.execute({
-      code,
       manufacturing_date,
       product_quantity,
     });

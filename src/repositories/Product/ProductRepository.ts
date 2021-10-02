@@ -12,14 +12,11 @@ class ProductRepository implements IProductRepository {
   }
 
   public async findAll(): Promise<Product[]> {
-    return this.ormRepository.find({ relations: ['lots'] });
+    return this.ormRepository.find();
   }
 
   public async findAllPaginate(): Promise<IPaginate<Product>> {
-    const product = await this.ormRepository
-      .createQueryBuilder()
-      .where([{ relations: ['lots'] }])
-      .paginate();
+    const product = await this.ormRepository.createQueryBuilder().paginate();
 
     return product as IPaginate<Product>;
   }
@@ -32,7 +29,15 @@ class ProductRepository implements IProductRepository {
     return product;
   }
 
-  public async findByCode(code: number): Promise<Product | undefined> {
+  public async findByLotId(lot_id: string): Promise<Product[]> {
+    const product = await this.ormRepository.find({
+      where: { lot_id },
+    });
+
+    return product;
+  }
+
+  public async findByCode(code: string): Promise<Product | undefined> {
     const product = await this.ormRepository.findOne({
       where: { code },
     });
@@ -60,7 +65,7 @@ class ProductRepository implements IProductRepository {
     amount,
     color,
     description,
-    lot_number,
+    lot_id,
     name,
     code,
   }: CreateProductDTO): Promise<Product> {
@@ -68,7 +73,7 @@ class ProductRepository implements IProductRepository {
       amount,
       color,
       description,
-      lot_number,
+      lot_id,
       name,
       code,
     });

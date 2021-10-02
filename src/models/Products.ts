@@ -18,16 +18,18 @@ class Product {
   id: string;
 
   @Column()
-  code: number;
+  code: string;
 
   @Column()
   name: string;
 
   @Column()
-  lot_number: number;
+  lot_id: string;
 
-  @ManyToOne(() => Lot, lot => lot.product)
-  @JoinColumn({ name: 'lot_number' })
+  @ManyToOne(() => Lot, {
+    eager: true,
+  })
+  @JoinColumn({ name: 'lot_id' })
   lot: Lot;
 
   @OneToMany(() => OrdersProducts, order_products => order_products.product)

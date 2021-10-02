@@ -10,20 +10,18 @@ export default class CreateProduct1633047616624 implements MigrationInterface {
             name: 'id',
             type: 'uuid',
             isPrimary: true,
-            generationStrategy: 'uuid',
-            default: 'uuid_generate_v4()',
           },
           {
             name: 'code',
-            type: 'int',
+            type: 'string',
           },
           {
             name: 'name',
             type: 'varchar',
           },
           {
-            name: 'lot_number',
-            type: 'int',
+            name: 'lot_id',
+            type: 'varchar',
           },
           {
             name: 'color',
@@ -46,6 +44,14 @@ export default class CreateProduct1633047616624 implements MigrationInterface {
             name: 'updated_at',
             type: 'timestamp with time zone',
             default: 'now()',
+          },
+        ],
+        foreignKeys: [
+          {
+            name: 'ProductsLots',
+            columnNames: ['lot_id'],
+            referencedTableName: 'lots',
+            referencedColumnNames: ['id'],
           },
         ],
       }),

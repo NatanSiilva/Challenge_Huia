@@ -14,13 +14,13 @@ class Lot {
   id: string;
 
   @Column()
-  code: number;
+  code: string;
 
-  @OneToMany(() => Product, product => product.lot, {
-    cascade: true,
-    // eager: true,
+  @OneToMany(() => Product, product => product.lot_id, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   })
-  product: Product;
+  products: Product[];
 
   @Column()
   manufacturing_date: string;

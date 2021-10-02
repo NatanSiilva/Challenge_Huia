@@ -1,7 +1,7 @@
 export default interface CreateProductDTO {
-  code: number;
+  code: string;
   name: string;
-  lot_number: number;
+  lot_id: string;
   color: string;
   description: string;
   amount: string;
