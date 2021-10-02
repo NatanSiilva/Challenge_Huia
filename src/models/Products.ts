@@ -2,7 +2,6 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  Generated,
   JoinColumn,
   ManyToOne,
   OneToMany,
@@ -42,7 +41,7 @@ class Product {
   description: string;
 
   @Column()
-  amount: string;
+  amount: number;
 
   @CreateDateColumn()
   created_at: Date;

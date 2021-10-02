@@ -17,13 +17,11 @@ export default class CreateOrder1633145898513 implements MigrationInterface {
           },
           {
             name: 'customer_id',
-            type: 'varchar',
-            isNullable: true,
+            type: 'uuid',
           },
           {
             name: 'user_id',
-            type: 'varchar',
-            isNullable: true,
+            type: 'uuid',
           },
           {
             name: 'created_at',
@@ -40,14 +38,14 @@ export default class CreateOrder1633145898513 implements MigrationInterface {
           {
             name: 'OrdersCustomer',
             columnNames: ['customer_id'],
-            referencedTableName: 'orders',
+            referencedTableName: 'users',
             referencedColumnNames: ['id'],
             onDelete: 'SET NULL',
           },
           {
             name: 'OrdersUsers',
             columnNames: ['user_id'],
-            referencedTableName: 'orders',
+            referencedTableName: 'users',
             referencedColumnNames: ['id'],
             onDelete: 'SET NULL',
           },

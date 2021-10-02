@@ -5,6 +5,7 @@ import CreateProductService from '../services/Product/CreateProductService';
 import ListProductLotService from '../services/Product/ListProductLotService';
 import DeleteProductService from '../services/Product/DeleteProductService';
 import UpdateProductService from '../services/Product/UpdateProductService';
+import ShowProductService from '../services/Product/ShowProductService';
 
 class ProductController {
   public async index(req: Request, res: Response): Promise<Response> {
@@ -13,6 +14,16 @@ class ProductController {
     const product = await listProduct.execute();
 
     return res.json({ total: product.length, success: true, data: product });
+  }
+
+  public async show(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+
+    const showProduct = container.resolve(ShowProductService);
+
+    const product = await showProduct.execute(id);
+
+    return res.json({ success: true, data: product });
   }
 
   public async indexLotProduct(req: Request, res: Response): Promise<Response> {

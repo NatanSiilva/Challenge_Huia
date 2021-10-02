@@ -19,7 +19,9 @@ class OrdersProducts {
   @JoinColumn({ name: 'order_id' })
   order: Order;
 
-  @ManyToOne(() => Product, product => product.order_products)
+  @ManyToOne(() => Product, product => product.order_products, {
+    eager: true,
+  })
   @JoinColumn({ name: 'product_id' })
   product: Product;
 
@@ -30,10 +32,10 @@ class OrdersProducts {
   product_id: string;
 
   @Column()
-  total_price: number;
+  amount: number;
 
   @Column()
-  quantity: number;
+  total_product: number;
 
   @CreateDateColumn()
   created_at: Date;

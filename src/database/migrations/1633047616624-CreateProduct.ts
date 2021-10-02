@@ -33,7 +33,7 @@ export default class CreateProduct1633047616624 implements MigrationInterface {
           },
           {
             name: 'amount',
-            type: 'varchar',
+            type: 'int',
           },
           {
             name: 'created_at',

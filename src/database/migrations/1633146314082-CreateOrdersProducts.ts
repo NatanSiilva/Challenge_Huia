@@ -15,18 +15,18 @@ export default class CreateOrdersProducts1633146314082
           },
           {
             name: 'order_id',
-            type: 'varchar',
+            type: 'uuid',
           },
           {
             name: 'product_id',
-            type: 'varchar',
+            type: 'uuid',
           },
           {
-            name: 'total_price',
+            name: 'total_product',
             type: 'int',
           },
           {
-            name: 'quantity',
+            name: 'amount',
             type: 'int',
           },
           {

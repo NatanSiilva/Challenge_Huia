@@ -4,5 +4,5 @@ export default interface CreateProductDTO {
   lot_id: string;
   color: string;
   description: string;
-  amount: string;
+  amount: number;
 }

@@ -1,7 +1,7 @@
-import { Repository, getRepository } from 'typeorm';
+import { Repository, getRepository, In } from 'typeorm';
 import IPaginate from '../../interfaces/IPaginate';
 import Product from '../../models/Products';
-import IProductRepository from './IProductRepository';
+import IProductRepository, { IFindProducts } from './IProductRepository';
 import CreateProductDTO from '../../dtos/CreateProductDTO';
 
 class ProductRepository implements IProductRepository {
@@ -27,6 +27,18 @@ class ProductRepository implements IProductRepository {
     });
 
     return product;
+  }
+
+  public async findAllByIds(products: IFindProducts[]): Promise<Product[]> {
+    const productIds = products.map(product => product.id);
+
+    const existentProducts = await this.ormRepository.find({
+      where: {
+        id: In(productIds),
+      },
+    });
+
+    return existentProducts;
   }
 
   public async findByLotId(lot_id: string): Promise<Product[]> {
