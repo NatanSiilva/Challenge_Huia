@@ -6,16 +6,15 @@ import sessionRoutes from './session';
 import userRoutes from './user';
 
 const routes = Router();
-const prefixRoutes = '/api/v1';
+
+routes.use(`/product`, productRoutes);
+routes.use(`/session`, sessionRoutes);
+routes.use(`/order`, orderRoutes);
+routes.use(`/user`, userRoutes);
+routes.use(`/lot`, lotRoutes);
 
 routes.get('/', (request, response) =>
   response.json({ message: '🚀  Server is running' }),
 );
-
-routes.use(`${prefixRoutes}/product`, productRoutes);
-routes.use(`${prefixRoutes}/session`, sessionRoutes);
-routes.use(`${prefixRoutes}/order`, orderRoutes);
-routes.use(`${prefixRoutes}/user`, userRoutes);
-routes.use(`${prefixRoutes}/lot`, lotRoutes);
 
 export default routes;

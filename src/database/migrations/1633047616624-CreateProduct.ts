@@ -22,6 +22,7 @@ export default class CreateProduct1633047616624 implements MigrationInterface {
           {
             name: 'lot_id',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'color',

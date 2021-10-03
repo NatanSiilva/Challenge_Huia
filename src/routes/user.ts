@@ -7,8 +7,8 @@ const userController = new UserController();
 
 // userRoutes.use(isAuthenticated);
 
-userRoutes.get('/', userController.index);
+userRoutes.get('/', isAuthenticated, userController.index);
 userRoutes.post('/', userController.create);
-userRoutes.delete('/id/:id', userController.delete);
+userRoutes.delete('/id/:id', isAuthenticated, userController.delete);
 
 export default userRoutes;

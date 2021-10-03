@@ -1,0 +1,1195 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API controle de venda",
+    "description": "Desafio Huia",
+    "contact": {
+      "name": "Natanael Silva",
+      "email": "contato@natandev.com.br"
+    },
+    "version": "1.0.0",
+    "servers": [
+      {
+        "url": "http://localhost:3000/"
+      }
+    ]
+  },
+  "paths": {
+    "/session": {
+      "post": {
+        "summary": "Autenticação do usuário",
+        "description": "Essa rota é responsável por da acesso a aplicação",
+        "tags": ["Session"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Sessions"
+              },
+              "examples": {
+                "Sessions": {
+                  "value": {
+                    "email": "vendedor.admin@teste.com",
+                    "password": "123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized, JWT Token is missing"
+          },
+          "400": {
+            "description": "Incorrect email/password combination"
+          },
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "user": {},
+                    "token": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user": {
+      "post": {
+        "summary": "Criar novo usuário",
+        "description": "Essa rota é responsável por criar usuário",
+        "tags": ["Users"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Users"
+              },
+              "examples": {
+                "Users": {
+                  "value": {
+                    "name": "Cliente 01",
+                    "email": "cliente01@teste.com",
+                    "password": "123456",
+                    "role": "CLIENTE",
+                    "cpf": "111.111.111-21",
+                    "birth_date": "23/11/1996"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized, JWT Token is missing"
+          },
+          "400": {
+            "description": "Email address already used"
+          },
+          "200": {
+            "description": "Successfully created product",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "string",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "fd3440dd-ac70-412e-bc33-9a2611971b11"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Cliente 01"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "cliente01@teste.com"
+                        },
+                        "cpf": {
+                          "type": "string",
+                          "example": "111.111.111-21"
+                        },
+                        "birth_date": {
+                          "type": "string",
+                          "example": "23/11/1996"
+                        },
+                        "role": {
+                          "type": "string",
+                          "example": "CLIENTE"
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "example": "2021-10-03T15:26:24.000Z"
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "example": "2021-10-03T15:26:24.000Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Listar todos os usuários",
+        "description": "Essa rota é responsável por criar usuário",
+        "tags": ["Users"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "401": {
+            "description": "Unauthorized, JWT Token is missing"
+          },
+          "200": {
+            "description": "Successfully created product"
+          }
+        }
+      }
+    },
+    "/user/id/{id}": {
+      "delete": {
+        "summary": "Deleta o usuário pelo id",
+        "description": "Essa rota é responsável por deletar o suário pelo id",
+        "tags": ["Users"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": false,
+            "description": "Consulta pelo id do usuário",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized, JWT Token is missing"
+          },
+          "400": {
+            "description": "User not found"
+          },
+          "200": {
+            "description": "Ok"
+          }
+        }
+      }
+    },
+    "/product": {
+      "post": {
+        "summary": "Cadastrar um novo produto",
+        "description": "Essa rota é responsável por cadastrar um novo produto",
+        "tags": ["Products"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              },
+              "examples": {
+                "Product": {
+                  "value": {
+                    "lot_id": "af1fb149-209d-444e-a103-c4f487a4b4f8",
+                    "name": "Sapato Nick",
+                    "color": "vermelho",
+                    "description": "Sapato da preto",
+                    "amount": 25
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized, JWT Token is missing"
+          },
+          "400": {
+            "description": "Product cannot be created, batch exceeded"
+          },
+          "200": {
+            "description": "Product created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "string",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "fd3440dd-ac70-412e-bc33-9a2611971b11"
+                        },
+                        "code": {
+                          "type": "string",
+                          "example": "nzziB"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Sapato Nick"
+                        },
+                        "lot_id": {
+                          "type": "number",
+                          "example": "af1fb149-209d-444e-a103-c4f487a4b4f8"
+                        },
+                        "color": {
+                          "type": "string",
+                          "example": "Vermelho"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Sapato de couro"
+                        },
+                        "amount": {
+                          "type": "number",
+                          "example": 20
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "example": "2021-10-03T15:26:24.000Z"
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "example": "2021-10-03T15:26:24.000Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Listar todos os produtos",
+        "description": "Essa rota é responsável por listar todos os produtos",
+        "tags": ["Products"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "401": {
+            "description": "Unauthorized, JWT Token is missing"
+          },
+          "400": {
+            "description": "Not product"
+          },
+          "200": {
+            "description": "Ok"
+          }
+        }
+      }
+    },
+    "/product/id/{id}/pro": {
+      "get": {
+        "summary": "Consultar os dados de um determinado produto pelo ID",
+        "description": "Essa rota é responsável por consultar os dados do produto pelo id",
+        "tags": ["Products"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": false,
+            "description": "Consulta pelo id do produto",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized, JWT Token is missing"
+          },
+          "400": {
+            "description": "Product not found"
+          },
+          "200": {
+            "description": "Product created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "string",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "fd3440dd-ac70-412e-bc33-9a2611971b11"
+                        },
+                        "code": {
+                          "type": "string",
+                          "example": "nzziB"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Sapato Nick"
+                        },
+                        "lot_id": {
+                          "type": "number",
+                          "example": "af1fb149-209d-444e-a103-c4f487a4b4f8"
+                        },
+                        "color": {
+                          "type": "string",
+                          "example": "Vermelho"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Sapato de couro"
+                        },
+                        "amount": {
+                          "type": "number",
+                          "example": 20
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "example": "2021-10-03T15:26:24.000Z"
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "example": "2021-10-03T15:26:24.000Z"
+                        },
+                        "lot": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "example": "fd3440dd-ac70-412e-bc33-9a2611971b11"
+                            },
+                            "code": {
+                              "type": "string",
+                              "example": "nzziB"
+                            },
+                            "manufacturing_date": {
+                              "type": "string",
+                              "example": "30/06/2020"
+                            },
+                            "product_quantity": {
+                              "type": "number",
+                              "example": 5
+                            },
+                            "created_at": {
+                              "type": "string",
+                              "example": "2021-10-03T15:26:24.000Z"
+                            },
+                            "updated_at": {
+                              "type": "string",
+                              "example": "2021-10-03T15:26:24.000Z"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product/id/{id}": {
+      "delete": {
+        "summary": "Deletar o produto",
+        "description": "Essa rota é responsável por deletar o produto",
+        "tags": ["Products"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": false,
+            "description": "Deletar pelo id do produto",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized, JWT Token is missing"
+          },
+          "400": {
+            "description": "Product not found"
+          },
+          "200": {
+            "description": "Ok"
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar o produto",
+        "description": "Essa rota é responsável por atualizar o produto",
+        "tags": ["Products"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              },
+              "examples": {
+                "Product": {
+                  "value": {
+                    "lot_id": "af1fb149-209d-444e-a103-c4f487a4b4f8",
+                    "name": "Sapato Nick",
+                    "color": "vermelho",
+                    "description": "Sapato da preto",
+                    "amount": "25"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": false,
+            "description": "Deletar pelo id do produto",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized, JWT Token is missing"
+          },
+          "400": {
+            "description": "There is already one product with this name"
+          },
+          "200": {
+            "description": "Product created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "string",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "fd3440dd-ac70-412e-bc33-9a2611971b11"
+                        },
+                        "code": {
+                          "type": "string",
+                          "example": "nzziB"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Sapato Nick"
+                        },
+                        "lot_id": {
+                          "type": "number",
+                          "example": "af1fb149-209d-444e-a103-c4f487a4b4f8",
+                          "description": "Só é adicionado se for trocar o de lote"
+                        },
+                        "color": {
+                          "type": "string",
+                          "example": "Vermelho"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Sapato de couro"
+                        },
+                        "amount": {
+                          "type": "number",
+                          "example": 20
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "example": "2021-10-03T15:26:24.000Z"
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "example": "2021-10-03T15:26:24.000Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/order": {
+      "post": {
+        "summary": "Cadastrar um novo pedido",
+        "description": "Essa rota é responsável por cadastrar um novo pedido",
+        "tags": ["Orders"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Orders"
+              },
+              "examples": {
+                "Orders": {
+                  "value": {
+                    "customer_id": "0f6430ab-3001-418f-819c-376f63f1f5fd",
+                    "user_id": "0f6430ab-3001-418f-819c-376f63f1f5fd",
+                    "products": [
+                      {
+                        "id": "f8d1d127-36d5-47ce-a3ba-523c0bf79b16"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized, JWT Token is missing"
+          },
+          "400": {
+            "description": "Product not found"
+          },
+          "200": {
+            "description": "Ok 1",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "string",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "object",
+
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "af1fb149-209d-444e-a103-c4f487a4b4f8"
+                        },
+                        "code": {
+                          "type": "string",
+                          "example": "nzziB"
+                        },
+                        "customer": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "example": "af1fb149-209d-444e-a103-c4f487a4b4f8"
+                            },
+                            "name": {
+                              "type": "string",
+                              "example": "Cliente 01"
+                            },
+                            "email": {
+                              "type": "string",
+                              "example": "cliente01@teste.com"
+                            },
+                            "birth_date": {
+                              "type": "string",
+                              "example": "23/11/1996"
+                            },
+                            "cpf": {
+                              "type": "string",
+                              "example": "111.111.111-21"
+                            },
+                            "role": {
+                              "type": "string",
+                              "example": "Cliente"
+                            },
+                            "created_at": {
+                              "type": "string"
+                            },
+                            "updated_at": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "user": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "example": "af1fb149-209d-444e-a103-c4f487a4b4f8"
+                            },
+                            "name": {
+                              "type": "string",
+                              "example": "Cliente 02"
+                            },
+                            "email": {
+                              "type": "string",
+                              "example": "cliente02@teste.com"
+                            },
+                            "birth_date": {
+                              "type": "string",
+                              "example": "23/11/1996"
+                            },
+                            "cpf": {
+                              "type": "string",
+                              "example": "111.111.111-21"
+                            },
+                            "role": {
+                              "type": "string",
+                              "example": "Vendedor"
+                            },
+                            "created_at": {
+                              "type": "string"
+                            },
+                            "updated_at": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "order_products": {
+                          "type": "object",
+                          "properties": {
+                            "product_id": {
+                              "type": "string",
+                              "example": "fd3440dd-ac70-412e-bc33-9a2611971b11"
+                            },
+                            "amount": {
+                              "type": "number",
+                              "example": 20
+                            },
+                            "order_id": {
+                              "type": "string",
+                              "example": "fd3440dd-ac70-412e-bc33-9a2611971b11"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "fd3440dd-ac70-412e-bc33-9a2611971b11"
+                            },
+                            "created_at": {
+                              "type": "string",
+                              "example": "2021-10-03T15:26:24.000Z"
+                            },
+                            "updated_at": {
+                              "type": "string",
+                              "example": "2021-10-03T15:26:24.000Z"
+                            }
+                          }
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "example": "2021-10-03T15:26:24.000Z"
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "example": "2021-10-03T15:26:24.000Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Listar todos os pedidos",
+        "description": "Essa rota é responsável por listar todos os pedidos",
+        "tags": ["Orders"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "page",
+            "required": false,
+            "description": "pagina atual",
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "per_page",
+            "required": false,
+            "description": "Quantidade de produtos por pagina",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized, JWT Token is missing"
+          },
+          "400": {
+            "description": "Not orders"
+          },
+          "200": {
+            "description": "Ok"
+          }
+        }
+      }
+    },
+    "/order/id/{id}": {
+      "get": {
+        "summary": "Lista um pedido pelo ID",
+        "description": "Essa rota é responsável por listar um pedidos pelo ID",
+        "tags": ["Orders"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": false,
+            "description": "Buscar o pedido por ID",
+            "type": "string"
+          }
+        ],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "401": {
+            "description": "Unauthorized, JWT Token is missing"
+          },
+          "400": {
+            "description": "Not orders"
+          },
+          "200": {
+            "description": "Ok 1",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "string",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "object",
+
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "af1fb149-209d-444e-a103-c4f487a4b4f8"
+                        },
+                        "code": {
+                          "type": "string",
+                          "example": "nzziB"
+                        },
+                        "customer": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "example": "af1fb149-209d-444e-a103-c4f487a4b4f8"
+                            },
+                            "name": {
+                              "type": "string",
+                              "example": "Cliente 01"
+                            },
+                            "email": {
+                              "type": "string",
+                              "example": "cliente01@teste.com"
+                            },
+                            "birth_date": {
+                              "type": "string",
+                              "example": "23/11/1996"
+                            },
+                            "cpf": {
+                              "type": "string",
+                              "example": "111.111.111-21"
+                            },
+                            "role": {
+                              "type": "string",
+                              "example": "Cliente"
+                            },
+                            "created_at": {
+                              "type": "string"
+                            },
+                            "updated_at": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "user": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "example": "af1fb149-209d-444e-a103-c4f487a4b4f8"
+                            },
+                            "name": {
+                              "type": "string",
+                              "example": "Cliente 02"
+                            },
+                            "email": {
+                              "type": "string",
+                              "example": "cliente02@teste.com"
+                            },
+                            "birth_date": {
+                              "type": "string",
+                              "example": "23/11/1996"
+                            },
+                            "cpf": {
+                              "type": "string",
+                              "example": "111.111.111-21"
+                            },
+                            "role": {
+                              "type": "string",
+                              "example": "Vendedor"
+                            },
+                            "created_at": {
+                              "type": "string"
+                            },
+                            "updated_at": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "order_products": {
+                          "type": "object",
+                          "properties": {
+                            "product_id": {
+                              "type": "string",
+                              "example": "fd3440dd-ac70-412e-bc33-9a2611971b11"
+                            },
+                            "amount": {
+                              "type": "number",
+                              "example": 20
+                            },
+                            "order_id": {
+                              "type": "string",
+                              "example": "fd3440dd-ac70-412e-bc33-9a2611971b11"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "fd3440dd-ac70-412e-bc33-9a2611971b11"
+                            },
+                            "created_at": {
+                              "type": "string",
+                              "example": "2021-10-03T15:26:24.000Z"
+                            },
+                            "updated_at": {
+                              "type": "string",
+                              "example": "2021-10-03T15:26:24.000Z"
+                            }
+                          }
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "example": "2021-10-03T15:26:24.000Z"
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "example": "2021-10-03T15:26:24.000Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletar um pedido",
+        "description": "Essa rota é responsável por deletar um pedido",
+        "tags": ["Orders"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": false,
+            "description": "Deletar o pedido pelo id",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized, JWT Token is missing"
+          },
+          "400": {
+            "description": "Pedido not found"
+          },
+          "200": {
+            "description": "Ok"
+          }
+        }
+      }
+    },
+    "/lot": {
+      "post": {
+        "summary": "Cadastrar um novo lote",
+        "description": "Essa rota é responsável por cadastrar um novo lot",
+        "tags": ["Lots"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Lot"
+              },
+              "examples": {
+                "Product": {
+                  "value": {
+                    "manufacturing_date": "30/06/2020",
+                    "product_quantity": 2
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized, JWT Token is missing"
+          },
+          "200": {
+            "description": "Batch created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "string",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "fd3440dd-ac70-412e-bc33-9a2611971b11"
+                        },
+                        "code": {
+                          "type": "string",
+                          "example": "nzziB"
+                        },
+                        "manufacturing_date": {
+                          "type": "string",
+                          "example": "2021-10-03T15:26:11.000Z"
+                        },
+                        "product_quantity": {
+                          "type": "number",
+                          "example": 5
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "example": "2021-10-03T15:26:24.000Z"
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "example": "2021-10-03T15:26:24.000Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Listar todos os lotes",
+        "description": "Essa rota é responsável por listar todos os lotes",
+        "tags": ["Lots"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "401": {
+            "description": "Unauthorized, JWT Token is missing"
+          },
+          "400": {
+            "description": "Not batch"
+          },
+          "200": {
+            "description": "Ok"
+          }
+        }
+      }
+    },
+    "/lot/id/{id}": {
+      "delete": {
+        "summary": "Deletar o lote",
+        "description": "Essa rota é responsável por deletar o lote",
+        "tags": ["Lots"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": false,
+            "description": "Deletar pelo id do lote",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized, JWT Token is missing"
+          },
+          "400": {
+            "description": "Batch not found"
+          },
+          "200": {
+            "description": "Ok"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Sessions": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "api-vendas@email.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "123456"
+          }
+        }
+      },
+      "Users": {
+        "type": "object",
+        "required": ["name", "email", "password", "role", "cpf", "birth_date"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Nome do cliente ou do vendedor",
+            "example": "Lucas Silva"
+          },
+          "email": {
+            "type": "string",
+            "description": "E-mail do cliente ou do vendedor",
+            "example": "lucas-silva@email.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "Senha do usuário",
+            "example": "123456"
+          },
+          "role": {
+            "type": "string",
+            "description": "CLIENTE ou VENDEDOR ",
+            "example": "VENDEDOR"
+          },
+          "cpf": {
+            "type": "string",
+            "description": "CPF do usuário",
+            "example": "111.111.111-21"
+          },
+          "birth_date": {
+            "type": "string",
+            "description": "Data de nascimento do usuário",
+            "example": "23/11/1996"
+          }
+        }
+      },
+      "Product": {
+        "type": "object",
+        "required": ["lot_id", "name", "color", "description", "amount"],
+        "properties": {
+          "lot_id": {
+            "type": "string",
+            "description": "Id do lote que o produto pertence",
+            "example": "af1fb149-209d-444e-a103-c4f487a4b4f8"
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome do produto",
+            "example": "Sapato Nick"
+          },
+          "color": {
+            "type": "string",
+            "description": "Cor do produto",
+            "example": "Vermelho"
+          },
+          "description": {
+            "type": "string",
+            "description": "Aqui vai informações sobre o produto",
+            "example": "Produto de couro vermelho"
+          },
+          "amount": {
+            "type": "number",
+            "description": "Preço do produto",
+            "example": "250"
+          }
+        }
+      },
+      "Orders": {
+        "type": "object",
+        "required": ["products", "customer_id", "user_id"],
+        "properties": {
+          "customer_id": {
+            "type": "string",
+            "description": "Id do cliente",
+            "example": "3c9d337e-adeb-4bc4-9c72-e252cc33bafa"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "Id do vendedor",
+            "example": "3c9d337e-adeb-4bc4-9c72-e252cc33bafa"
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id"],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "id do produto",
+                  "example": "3c9d337e-adeb-4bc4-9c72-e252cc33bafa"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Lot": {
+        "type": "object",
+        "required": ["manufacturing_date", "product_quantity"],
+        "properties": {
+          "manufacturing_date": {
+            "type": "string",
+            "description": "Data que o produto foi fabricado",
+            "example": "30/06/2020"
+          },
+          "product_quantity": {
+            "type": "string",
+            "description": "Quantidade de produto fabricado nesse lote",
+            "example": 20
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
