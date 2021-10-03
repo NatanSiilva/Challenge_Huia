@@ -2,7 +2,7 @@ import { IUser } from './CreateUserDTO';
 
 export interface ICreateOrderProducts {
   product_id: string;
-  total_product: number;
+  // total_product: number;
   amount: number;
 }
 

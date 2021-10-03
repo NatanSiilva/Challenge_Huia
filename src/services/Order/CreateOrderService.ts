@@ -80,35 +80,40 @@ class CreateOrderService {
       );
     }
 
-    let items = [] as IItems[];
+    // let items = [] as IItems[];
 
-    for (let item of products) {
-      const itemExist = items.find(itemFind => itemFind.id === item.id);
+    // for (let item of products) {
+    //   const itemExist = items.find(itemFind => itemFind.id === item.id);
 
-      if (itemExist) {
-        items.forEach(element => {
-          if (element.id === item.id) {
-            element.total_product += 1;
-          }
-        });
-      }
+    //   if (itemExist) {
+    //     items.forEach(element => {
+    //       if (element.id === item.id) {
+    //         element.total_product += 1;
+    //       }
+    //     });
+    //   }
 
-      const amount = existsProducts.filter(p => p.id === item.id)[0].amount;
+    //   const amount = existsProducts.filter(p => p.id === item.id)[0].amount;
 
-      if (!itemExist)
-        items.push({
-          ...item,
-          total_product: 1,
-          product_id: item.id,
-          amount,
-        });
-    }
+    //   if (!itemExist)
+    //     items.push({
+    //       ...item,
+    //       total_product: 1,
+    //       product_id: item.id,
+    //       amount,
+    //     });
+    // }
+
+    const serializedProducts = products.map(product => ({
+      product_id: product.id,
+      amount: existsProducts.filter(p => p.id === product.id)[0].amount,
+    }));
 
     const order = await this.ordersRepository.create({
       code: makeid(5),
       user: userExists,
       customer: customerExists,
-      products: items,
+      products: serializedProducts,
     });
 
     return order;

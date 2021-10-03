@@ -15,18 +15,16 @@ class OrdersProducts {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column()
+  order_id: string;
+
   @ManyToOne(() => Order, order => order.order_products)
   @JoinColumn({ name: 'order_id' })
   order: Order;
 
-  @ManyToOne(() => Product, product => product.order_products, {
-    eager: true,
-  })
+  @ManyToOne(() => Product, product => product.order_products)
   @JoinColumn({ name: 'product_id' })
   product: Product;
-
-  @Column()
-  order_id: string;
 
   @Column()
   product_id: string;
@@ -34,8 +32,8 @@ class OrdersProducts {
   @Column()
   amount: number;
 
-  @Column()
-  total_product: number;
+  // @Column()
+  // total_product: number;
 
   @CreateDateColumn()
   created_at: Date;

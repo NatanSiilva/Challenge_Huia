@@ -21,10 +21,10 @@ export default class CreateOrdersProducts1633146314082
             name: 'product_id',
             type: 'uuid',
           },
-          {
-            name: 'total_product',
-            type: 'int',
-          },
+          // {
+          //   name: 'total_product',
+          //   type: 'int',
+          // },
           {
             name: 'amount',
             type: 'int',
@@ -62,5 +62,10 @@ export default class CreateOrdersProducts1633146314082
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropTable('orders_products');
+    await queryRunner.dropForeignKey('orders_products', 'OrdersProductsOrder');
+    await queryRunner.dropForeignKey(
+      'orders_products',
+      'OrdersProductsProduct',
+    );
   }
 }
