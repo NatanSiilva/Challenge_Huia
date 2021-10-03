@@ -40,22 +40,15 @@ class CreateOrderService {
     products,
   }: IRequestCreateOrder): Promise<Order> {
     const customerExists = await this.userRepository.findById(customer_id);
+
+    if (!customerExists) {
+      throw new AppError('Could not find any customer with the given id.', 400);
+    }
+
     const userExists = await this.userRepository.findById(user_id);
 
-    if (customer_id) {
-      if (!customerExists) {
-        throw new AppError(
-          'Could not find any customer with the given id.',
-          400,
-        );
-      }
-    } else {
-      if (!userExists) {
-        throw new AppError(
-          'Could not find any salesman with the given id.',
-          400,
-        );
-      }
+    if (!userExists) {
+      throw new AppError('Could not find any salesman with the given id.', 400);
     }
 
     const existsProducts = await this.productRepository.findAllByIds(products);
