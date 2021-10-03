@@ -4,6 +4,7 @@ import { container } from 'tsyringe';
 import CreateOrderService from '../services/Order/CreateOrderService';
 import ShowOrderService from '../services/Order/ShowOrderService';
 import ListOrderReportService from '../services/Order/ListOrderReportService';
+import DeleteOrderService from '../services/Order/DeleteOrderService';
 
 export default class OrdersController {
   public async index(req: Request, res: Response): Promise<Response> {
@@ -44,5 +45,15 @@ export default class OrdersController {
     });
 
     return res.json({ success: true, data: order });
+  }
+
+  public async delete(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+
+    const deleteOrder = container.resolve(DeleteOrderService);
+
+    await deleteOrder.execute(id);
+
+    return res.json({ message: 'Order deleted success' });
   }
 }
