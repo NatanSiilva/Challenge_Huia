@@ -1,10 +1,12 @@
 import { Router } from 'express';
 import ProductController from '../controllers/ProductController';
+import isAuthenticated from '../middleware/isAuthenticated';
 
 const productRoutes = Router();
 const userController = new ProductController();
 
-// userRoutes.use(authentication)
+productRoutes.use(isAuthenticated);
+
 productRoutes.get('/', userController.index);
 productRoutes.get('/id/:lot_id', userController.indexLotProduct);
 productRoutes.get('/id/:id/prod', userController.show);

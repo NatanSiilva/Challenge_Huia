@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
+import AppError from '../errors/AppError';
 import { verify } from 'jsonwebtoken';
-import AppError from '@shared/errors/AppError';
-import authConfig from '@config/auth';
+import authConfig from '../config/auth';
 
 interface ITokenPayload {
   iat: number;
@@ -18,7 +18,7 @@ export default function isAuthenticated(
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
-    throw new AppError('JWT token ausente.', 401);
+    throw new AppError('JWT Token is missing.', 401);
   }
 
   const [, token] = authHeader.split(' ');
@@ -27,16 +27,17 @@ export default function isAuthenticated(
     const decodedToken = verify(token, authConfig.jwt.secret as string);
 
     if (!decodedToken) {
-      throw new AppError('JWT Token é invalido.', 401);
+      throw new AppError('JWT Token is invalid.', 401);
     }
 
     const { sub } = decodedToken as ITokenPayload;
+
     req.user = {
       id: sub,
     };
 
     return next();
   } catch (error) {
-    throw new AppError('JWT Token é invalido.');
+    throw new AppError('JWT Token is invalid.', 400);
   }
 }
