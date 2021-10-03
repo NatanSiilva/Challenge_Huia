@@ -65,7 +65,7 @@
     "/user": {
       "post": {
         "summary": "Criar novo usuário",
-        "description": "Essa rota é responsável por criar usuário",
+        "description": "Essa rota é responsável por criar usuários, você pode criar dois tipos de usuários, VENDEDOR ou CLIENTE",
         "tags": ["Users"],
         "security": [{ "bearerAuth": [] }],
         "requestBody": {
@@ -152,7 +152,7 @@
       },
       "get": {
         "summary": "Listar todos os usuários",
-        "description": "Essa rota é responsável por criar usuário",
+        "description": "Essa rota é responsável listar todos os usuários",
         "tags": ["Users"],
         "security": [{ "bearerAuth": [] }],
         "responses": {
@@ -168,7 +168,7 @@
     "/user/id/{id}": {
       "delete": {
         "summary": "Deleta o usuário pelo id",
-        "description": "Essa rota é responsável por deletar o suário pelo id",
+        "description": "Essa rota é responsável por deletar o usuário por id",
         "tags": ["Users"],
         "security": [{ "bearerAuth": [] }],
         "parameters": [
@@ -176,7 +176,7 @@
             "in": "path",
             "name": "id",
             "required": false,
-            "description": "Consulta pelo id do usuário",
+            "description": "Deletar por id do usuário",
             "type": "string"
           }
         ],
@@ -196,7 +196,7 @@
     "/product": {
       "post": {
         "summary": "Cadastrar um novo produto",
-        "description": "Essa rota é responsável por cadastrar um novo produto",
+        "description": "Essa rota é responsável por cadastrar um novo produto, para criar um produto é obrigatório adicionar o ID do lote (lot_id) que o produto pertence.",
         "tags": ["Products"],
         "security": [{ "bearerAuth": [] }],
         "requestBody": {
@@ -304,8 +304,8 @@
     },
     "/product/id/{id}/pro": {
       "get": {
-        "summary": "Consultar os dados de um determinado produto pelo ID",
-        "description": "Essa rota é responsável por consultar os dados do produto pelo id",
+        "summary": "Consultar os dados de um determinado produto por ID",
+        "description": "Essa rota é responsável por consultar os dados do produto por id",
         "tags": ["Products"],
         "security": [{ "bearerAuth": [] }],
         "parameters": [
@@ -314,6 +314,116 @@
             "name": "id",
             "required": false,
             "description": "Consulta pelo id do produto",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized, JWT Token is missing"
+          },
+          "400": {
+            "description": "Product not found"
+          },
+          "200": {
+            "description": "Product created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "success": {
+                      "type": "string",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "fd3440dd-ac70-412e-bc33-9a2611971b11"
+                        },
+                        "code": {
+                          "type": "string",
+                          "example": "nzziB"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Sapato Nick"
+                        },
+                        "lot_id": {
+                          "type": "number",
+                          "example": "af1fb149-209d-444e-a103-c4f487a4b4f8"
+                        },
+                        "color": {
+                          "type": "string",
+                          "example": "Vermelho"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Sapato de couro"
+                        },
+                        "amount": {
+                          "type": "number",
+                          "example": 20
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "example": "2021-10-03T15:26:24.000Z"
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "example": "2021-10-03T15:26:24.000Z"
+                        },
+                        "lot": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "example": "fd3440dd-ac70-412e-bc33-9a2611971b11"
+                            },
+                            "code": {
+                              "type": "string",
+                              "example": "nzziB"
+                            },
+                            "manufacturing_date": {
+                              "type": "string",
+                              "example": "30/06/2020"
+                            },
+                            "product_quantity": {
+                              "type": "number",
+                              "example": 5
+                            },
+                            "created_at": {
+                              "type": "string",
+                              "example": "2021-10-03T15:26:24.000Z"
+                            },
+                            "updated_at": {
+                              "type": "string",
+                              "example": "2021-10-03T15:26:24.000Z"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product/id/{lot_id}": {
+      "get": {
+        "summary": "Consultar produtos por ID do lote",
+        "description": "Essa rota é responsável por consultar todos os produtos por ID de determinado lote",
+        "tags": ["Products"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": false,
+            "description": "Consulta pelo id do lote",
             "type": "string"
           }
         ],
@@ -423,7 +533,7 @@
             "in": "path",
             "name": "id",
             "required": false,
-            "description": "Deletar pelo id do produto",
+            "description": "Deletar por id do produto",
             "type": "string"
           }
         ],
@@ -441,7 +551,7 @@
       },
       "put": {
         "summary": "Atualizar o produto",
-        "description": "Essa rota é responsável por atualizar o produto",
+        "description": "Essa rota é responsável por atualizar o produto, o campo (lot_id) só é preenchido se for trocar de lot, caso contrário pode excluir o campo.",
         "tags": ["Products"],
         "security": [{ "bearerAuth": [] }],
         "requestBody": {
@@ -543,7 +653,7 @@
     "/order": {
       "post": {
         "summary": "Cadastrar um novo pedido",
-        "description": "Essa rota é responsável por cadastrar um novo pedido",
+        "description": "Essa rota é responsável por cadastrar um novo pedido, o campo (user_id) pode ser obtido na rota GET/user com o usuário que tem o campo (role: 'VENDEDOR', o campo (customer_id) é obtido na mesma rota, porém tem que ter o campo (role: 'CLIENTE') ",
         "tags": ["Orders"],
         "security": [{ "bearerAuth": [] }],
         "requestBody": {
@@ -749,8 +859,8 @@
     },
     "/order/id/{id}": {
       "get": {
-        "summary": "Lista um pedido pelo ID",
-        "description": "Essa rota é responsável por listar um pedidos pelo ID",
+        "summary": "Lista um pedido por ID",
+        "description": "Essa rota é responsável por listar um pedidos por ID",
         "tags": ["Orders"],
         "parameters": [
           {
