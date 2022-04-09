@@ -7,7 +7,7 @@
 <div align="left">
   <h1 id="sobre-o-projeto"> ✅ Agradecimentos</h1>
   <p>
-      Primeiramente quero agradecer por essa oportunidade incrível de está participando desse processo seletivo, espero que de verdade eu venha fazer parte dessa grade equipe e vim contribuir e apreender ainda mais. Independente de qual seja o resultado quero deixar aqui os meus parabéns para Giulia e a Gabi por conduzir esse processo com leveza e alegria, estou muito feliz por isso💜
+      Primeiramente quero agradecer por essa oportunidade incrível de está participando desse processo seletivo, espero que de verdade eu venha fazer parte dessa grade equipe e contribuir e apreender ainda mais. Independente de qual seja o resultado quero deixar aqui os meus parabéns para Giulia e a Gabi por conduzir esse processo com leveza e alegria, estou muito feliz por isso💜
   </p>
 
 </br>
